@@ -36,7 +36,7 @@ public static void main(String[] args) {
 
 private static void imprimeDegrau(int numeroDegrau, int numeroLido,String degrauEscada) {
 	
-	/*a Quantidade de  espaÃ§os e dado pela diferenca entre o numero lido(tamanho da escada) e o degrau atual*/
+	/*a Quantidade de  espaços e dado pela diferenca entre o numero lido(tamanho da escada) e o degrau atual*/
 		int espacoDegrau=numeroLido-numeroDegrau; 
 		
 		for(int i=0;i<numeroDegrau;i++){
