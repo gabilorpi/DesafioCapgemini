@@ -16,7 +16,7 @@ public  ArrayList<String> geraListaAnagramas(String prefix, String textoDigitado
 		}else {
 			for (int i = 0; i < textoDigitado.length(); i++) {
 				String primeiraParteTexto = textoDigitado.substring(i, i + 1);/*pega a primeira letra*/
-				String segundaParteTexo= textoDigitado.substring(0, i); /*pega a substring entre a primeira e a próxima*/ 
+				String segundaParteTexo= textoDigitado.substring(0, i); /*pega a substring entre a primeira e a proxima*/ 
 				String ultimaParteTexto = textoDigitado.substring(i + 1); 
 				geraListaAnagramas(prefix + primeiraParteTexto, segundaParteTexo + ultimaParteTexto);
 			}

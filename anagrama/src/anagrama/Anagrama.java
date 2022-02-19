@@ -1,8 +1,8 @@
 /*
-# Questï¿½o 03
+# Questao 03
 Duas palavras podem ser consideradas anagramas de si mesmas se as letras de uma palavra
 podem ser realocadas para formar a outra palavra. Dada uma string qualquer, desenvolva um
-algoritmo que encontre o nï¿½mero de pares de substrings que sï¿½o anagramas.
+algoritmo que encontre o numero de pares de substrings que sao anagramas.
 */
 package anagrama;
 import java.util.ArrayList;
@@ -12,39 +12,39 @@ import java.util.Set;
 
 public class Anagrama {
 	
-public static void main(String[] args) {
+public static void main(String[] args) throws Exception {
 	Scanner dados=new Scanner(System.in);
-	String anagrama="";
-	int controle=0;
-	/*System.out.print("Digite a string desejada: ");
-	anagrama=dados.next();
-   	dados.close();*/
+	System.out.print("Digite a string desejada: ");
+	String texto = dados.nextLine();
+	dados.close();
+	
+	if(texto.length() < 2) { // Caso a string seja menor do que dois, lança a exceção.
+		throw new Exception("Não existe anagramas com somente um caracter.");
+		
+	}
 	GeradorDeAnagramas gAnagramas=new GeradorDeAnagramas();
-   	String texto = "ifailuhkqq";
    	ArrayList<String> listaAnagramasPares= new ArrayList<String>();
    
    	gAnagramas.listaAnagramasGerados=gAnagramas.geraListaAnagramas("", texto);
 
 		
-   for(int i=0; i<gAnagramas.listaAnagramasGerados.size();i++) {
+   for(int i = 0; i < gAnagramas.listaAnagramasGerados.size(); i++) { // Separa os pares do anagrama e adiciona ao arraylist
 	   
-	   String s=gAnagramas.listaAnagramasGerados.get(i);
-	    String temp="";
+	   String s = gAnagramas.listaAnagramasGerados.get(i);
+	   String temp = "";
+	   
 	   for(int j=0; j<=1;j++) {
-		  
-		  temp+= s.valueOf(s.charAt(j));
-		  
+		  temp += s.valueOf(s.charAt(j));
 	   }
+	   
 	   listaAnagramasPares.add(temp);
    }
-   Set<String> set=new HashSet<>(listaAnagramasPares);
-   listaAnagramasPares.clear();
-   listaAnagramasPares.addAll(set);
    
-   for(int i=0; i<listaAnagramasPares.size();i++) {
+	   Set<String> set=new HashSet<>(listaAnagramasPares); // Cria uma coleção para tratar os pares duplicados
+	   listaAnagramasPares.clear();
+	   listaAnagramasPares.addAll(set);
 	   
-	   System.out.println(listaAnagramasPares.get(i));
-   }
-   
-}
-}//fim da classe anagrama
+	   System.out.println("a quantidades de pares é: " + listaAnagramasPares.size());
+	   
+	}
+}	//fim da classe anagrama
