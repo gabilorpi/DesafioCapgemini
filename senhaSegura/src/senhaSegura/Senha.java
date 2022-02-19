@@ -1,5 +1,4 @@
-/*
-Débora se inscreveu em uma rede social para se manter em contato com seus amigos. A
+/*Débora se inscreveu em uma rede social para se manter em contato com seus amigos. A
 página de cadastro exigia o preenchimento dos campos de nome e senha, porém a senha precisa ser
 forte. O site considera uma senha forte quando ela satisfaz os seguintes critérios:
 ● Possui no mínimo 6 caracteres.
@@ -13,6 +12,7 @@ senha forte. Para ajudar Débora, construa um algoritmo que informe qual é o n�
 caracteres que devem ser adicionados para uma string qualquer ser considerada segura.
  */
 package senhaSegura;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -21,124 +21,121 @@ public class Senha {
 	public static void main(String[] args) {
 			Scanner dados=new Scanner(System.in);
 			String senha="";
-			int numeroCaracteresSenhaDigitada=0;
-			int numeroCaracteresNecessarios=0;
 			int numeroExigidoCaracteresSenha=6;
+			ArrayList<String> mensagensAvisoUsuario= new ArrayList<String>();
 	     	
-			System.out.print("Digite sua senha: ");
+			System.out.print("Digite sua senha:");
 	       	senha=dados.next();
 	       	dados.close();
 	       	
-	       	//Quantidade de caracteres digitados	  	
-	       	numeroCaracteresSenhaDigitada=contaCaracteresSenha(senha);		
-	     
-	       	//Quantidade  de caracteres necessários para atender os requisitos
-	       	numeroCaracteresNecessarios= numeroExigidoCaracteresSenha - numeroCaracteresSenhaDigitada; 
-	 
-if((numeroCaracteresNecessarios>0) && (numeroCaracteresNecessarios<6)) {
-		   
-	       	 System.out.println("\nVocê precisa adicionar: "+numeroCaracteresNecessarios +" caracteres a sua senha." );
+	     	       
+	       	if(contaCaracteresSenha(senha)<numeroExigidoCaracteresSenha) {
+	       		mensagensAvisoUsuario.add("");    		
+     	   	}
+                  	 
 	        if(!verificaExisteCaracterEspecial(senha)) {
-       	    		System.out.println("\nContendo pelo menos (01) um caractere especial.");
+	        	  mensagensAvisoUsuario.add("Contendo (01) um caractere especial.");	  
        	   	}
        	  	
        	 	if(!verificaExisteLetraMinuscula(senha)) {
-       	 		System.out.println("\nContendo pelo menos (01) uma letra minúscula.");
+       	 		  mensagensAvisoUsuario.add("Contendo (01) uma letra minúscula.");
        	   	}
        	    	
        	 	if(!verificaExisteLetraMaiuscula(senha)) {
-       	 		System.out.println("\nContendo pelo menos (01) uma letra maiúscula.");
+       	 		mensagensAvisoUsuario.add("Contendo (01) uma letra maiúscula.");
    	    	}
        	 	
        	 	if(!verificaExisteNumero(senha)) {
-       	 		System.out.println("\nContendo pelo menos (01) um número.");
+       	 		mensagensAvisoUsuario.add("Contendo (01) um número.");
    	    	}
-		   
-	    }else {
-	    	System.out.println("Você não precisa adicionar caracteres a sua senha, ela é segura!");
-	    }
-	       	 	
+
+       	 	if(mensagensAvisoUsuario.size() > 0) {
+       	 	
+       	 		if(senha.length()<numeroExigidoCaracteresSenha) {
+       	 			System.err.println("\nSua senha tem " + senha.length() + " caracteres ela deve ter no mínimo 6 caracteres.");	
+       	 			
+       	 		} else {
+       	 			System.err.println("\nVocê precisa modificar sua senha adicionando pelo menos "+mensagensAvisoUsuario.size()+" caracteres seguindo os critérios:");	
+       	 		}
+       	 		
+       	 		 for(int i=0;i<mensagensAvisoUsuario.size();i++) {
+       	 			System.out.println(mensagensAvisoUsuario.get(i));
+       	 		}
+       	 		
+       	 	
+       	 	} else {
+       	 		System.out.println("Sua senha atende aos requisitos e é segura!");
+       	 	}
 }
 	
-private static int contaCaracteresSenha(String senha) {
+	private static int contaCaracteresSenha(String senha) {
 		
 		return senha.length(); 
 	}
 	
- private static boolean verificaExisteCaracterEspecial(String senha) {
+	private static boolean verificaExisteCaracterEspecial(String senha) {
 	 
 	 boolean existeCaracterEspecial=false;
 	 char[] caracteresEspeciais = {'#','@','!','$','%','^','&','(',')','-','+','*'}; //vetor contendo o alfabeto para buscar
-	  for(int i=0; i<senha.length(); i++)  // executo a iteração sobre a string Senha que contém o valor digitado pelo usuário
-      {
+	  for(int i=0; i<senha.length(); i++) {  // executo a iteração sobre a string Senha que contém o valor digitado pelo usuário
+     
           char caracterEspecial = senha.charAt(i); // Sepraro o caractere na posição i do vetor para comparação 
-          for(int j=0; j<caracteresEspeciais.length; j++)
-          {
-              if(caracteresEspeciais[j] == caracterEspecial)// comparo para verificar se o caractere selecionado é um caractere especial
-              {
-            	  existeCaracterEspecial=true;      		//se achar algum caractere especial, existeCaracterEspecial recebe verdadeiro
+          for(int j=0; j<caracteresEspeciais.length; j++) {
+       
+              if(caracteresEspeciais[j] == caracterEspecial) {	// comparo para verificar se o caractere selecionado é um caractere especial
+            	  existeCaracterEspecial=true;      			//se achar algum caractere especial, existeCaracterEspecial recebe verdadeiro
               }
           }  
-}
+	  }
 	  return existeCaracterEspecial;	//retorno o boolean com o resultado verdadeiro se contem caracter especial e falso caso contrário
-}// fim do verificaExisteCaracterEspecial
+	}								   // fim do verificaExisteCaracterEspecial
  
-private static boolean verificaExisteNumero(String senha) { 
+	private static boolean verificaExisteNumero(String senha) { 
  
 	boolean existeNumero=false;
 	char[] numeros= {'0','1','2','3','4','5','6','7','8','9'};
-	for(int i=0; i<senha.length(); i++) 
-    {
+	for(int i=0; i<senha.length(); i++)	{
 		char strNumero = senha.charAt(i);
-        for(int j=0; j<numeros.length; j++)
-        {
-            if(numeros[j] == strNumero)
-            {
+        for(int j=0; j<numeros.length; j++) {
+       
+            if(numeros[j] == strNumero) {
             	existeNumero=true;      
             }
         }  
-
     }
 	return existeNumero;
-}//fim do verificaExisteNumero
+}	//fim do verificaExisteNumero
 
-private static boolean verificaExisteLetraMinuscula(String senha) { 
+	private static boolean verificaExisteLetraMinuscula(String senha) { 
 
 	boolean existeLetra=false;
 	char[] letras= {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
 	
-	for(int i=0; i<senha.length(); i++) 
-    {
+	for(int i=0; i<senha.length(); i++)	{
 	   char letra = senha.charAt(i);
-       for(int j=0; j<letras.length; j++)
-       {
-           if(letras[j] == letra)
-           {
+       for(int j=0; j<letras.length; j++) {
+           if(letras[j] == letra) {
         	   existeLetra=true;      
            }
        }  
-	
     }
-	return existeLetra;
-}//Fim do verificaExisteLetraMinuscula
+		return existeLetra;
+   }		//Fim do verificaExisteLetraMinuscula
 
-private static boolean verificaExisteLetraMaiuscula(String senha) { 
+	private static boolean verificaExisteLetraMaiuscula(String senha) { 
 	
 	boolean existeLetraMaiscula=false;
     char[] letras= {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
-    for(int i=0; i<senha.length(); i++) 
-    {
+    
+    for(int i=0; i<senha.length(); i++) {
     	char letra = senha.charAt(i);
-    	for(int j=0; j<letras.length; j++)
-    	{
-    		if(letras[j] == letra)
-    		{
+    	for(int j=0; j<letras.length; j++) {
+    		if(letras[j] == letra) {
     			existeLetraMaiscula=true;      
     		}
-    }  
-    
-}
-    return existeLetraMaiscula;
-}//fim do verificaExisteLetraMaiuscula 
+    	}  
+    }
+    	return existeLetraMaiscula;
+	}		//fim do verificaExisteLetraMaiuscula 
 
-}//fim da classe senha
+ }			//fim da classe senha
